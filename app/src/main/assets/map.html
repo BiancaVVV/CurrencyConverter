@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schimb Valutar</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+          height: 100vh;
+          width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Funcție pentru a adăuga un marker pe hartă
+    function addMarker(lat, lon, name) {
+      L.marker([lat, lon]).addTo(map)
+        .bindPopup(`<b>${name}</b>`);
+    }
+
+    // Inițializăm harta
+    const map = L.map('map').setView([44.3191, 23.7949], 13); // Coordonatele Craiovei (default, vor fi actualizate)
+
+    // Adăugăm layer-ul de hartă OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    // API Foursquare pentru a căuta locațiile
+    const apiKey = "fsq3YXzgumxZCfK6Y8ZDX94hXptk/eT7CRKL1U0eE2nBokE=";
+
+    // Funcția pentru a obține locația curentă a utilizatorului
+    function getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          console.log("Locația curentă:", lat, lon);
+
+          // Actualizăm harta cu locația curentă
+          map.setView([lat, lon], 13);
+
+          // Apelăm Foursquare cu locația curentă
+          fetchLocations(lat, lon);
+        }, function(error) {
+          alert("Nu am putut obține locația");
+
+          const defaultLat = 44.3191;
+          const defaultLon = 23.7949;
+          map.setView([defaultLat, defaultLon], 13);
+          fetchLocations(defaultLat, defaultLon);
+        });
+      } else {
+        alert("Geolocation nu este disponibil în acest browser. ");
+        const defaultLat = 44.3191;
+        const defaultLon = 23.7949;
+        map.setView([defaultLat, defaultLon], 13);
+        fetchLocations(defaultLat, defaultLon);
+      }
+    }
+
+    // Funcția pentru a căuta locațiile de schimb valutar de la Foursquare
+    function fetchLocations(lat, lon) {
+      const url = `https://api.foursquare.com/v3/places/search?ll=${lat},${lon}&radius=50000&query=exchange%20currency%20banca%20schimb%20valutar%20currency%20money&limit=50`; // Căutăm mai multe cuvinte cheie pentru locații de schimb valutar
+
+      // Realizăm cererea API
+      fetch(url, {
+        headers: {
+          "Authorization": apiKey
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.results && data.results.length > 0) {
+          console.log("Rezultate API:", data.results); // Logăm rezultatele API pentru depanare
+          data.results.forEach(place => {
+            const lat = place.geocodes.main.latitude;
+            const lon = place.geocodes.main.longitude;
+            const name = place.name;
+
+            // Filtrare locații de tip schimb valutar
+            const keywords = ["schimb valutar", "exchange", "money", "currency", "banca"];
+            const matched = keywords.some(keyword => name.toLowerCase().includes(keyword.toLowerCase()));
+
+            if (matched) {
+              console.log(`Marker: ${name} @ (${lat}, ${lon})`); // Afișează în consola locațiile găsite
+              addMarker(lat, lon, name); // Adăugăm marker pe hartă
+            }
+          });
+        } else {
+          alert("Nicio locație găsită!");
+        }
+      })
+      .catch(error => {
+        console.error("Eroare API:", error);
+        alert("Eroare la apel API!");
+      });
+    }
+
+    // Apelăm funcția pentru a obține locația curentă
+    getCurrentLocation();
+</script>
+</body>
+</html>

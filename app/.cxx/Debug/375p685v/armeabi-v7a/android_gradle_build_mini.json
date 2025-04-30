@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/biancaveleanu/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/.cxx/Debug/375p685v/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/biancaveleanu/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/.cxx/Debug/375p685v/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "myapplication::@6890427a1f51a3e7e1df": {
+      "artifactName": "myapplication",
+      "abi": "armeabi-v7a",
+      "output": "/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/build/intermediates/cxx/Debug/375p685v/obj/armeabi-v7a/libmyapplication.so",
+      "runtimeFiles": []
+    }
+  }
+}

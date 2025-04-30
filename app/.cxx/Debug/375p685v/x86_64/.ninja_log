@@ -1,0 +1,8 @@
+# ninja log v5
+0	13	1741257315370551580	CMakeFiles/myapplication.dir/myapplication.cpp.o	37afd5916cfe1a78
+14	37	1741257315393778769	/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/build/intermediates/cxx/Debug/375p685v/obj/x86_64/libmyapplication.so	131216720dc8d5a
+0	3	0	clean	8aff6c9c76a980c0
+0	3	0	clean	8aff6c9c76a980c0
+0	18	1741292478703107705	CMakeFiles/myapplication.dir/myapplication.cpp.o	37afd5916cfe1a78
+18	72	1741292478757875316	/Users/biancaveleanu/AndroidStudioProjects/MyApplication/app/build/intermediates/cxx/Debug/375p685v/obj/x86_64/libmyapplication.so	131216720dc8d5a
+0	3	0	clean	8aff6c9c76a980c0
